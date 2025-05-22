@@ -2,7 +2,6 @@ package org.dnttr.zephyr.toolset.types;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 /**
  * @author dnttr
@@ -10,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@RequiredArgsConstructor
 public enum Type {
 
     /*
@@ -45,7 +43,7 @@ public enum Type {
      * Non-primitive types (therefore not fixed size)
      */
 
-    STRING(0x9);
+    STRING(0x9, 0);
 
     private final int modifiers;
     private int bytes;
