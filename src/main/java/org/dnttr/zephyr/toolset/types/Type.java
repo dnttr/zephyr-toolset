@@ -45,7 +45,7 @@ public enum Type {
      * Non-primitive types (therefore not fixed size)
      */
 
-    STRING(0x9, 0);
+    STRING(0x9);
 
     private final int modifiers;
     private int bytes;
