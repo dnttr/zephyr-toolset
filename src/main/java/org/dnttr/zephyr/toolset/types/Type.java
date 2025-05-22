@@ -45,6 +45,6 @@ public enum Type {
 
     STRING(0x9, 0);
 
-    private final int modifiers;
+    private final int modifier;
     private int bytes;
 }
