@@ -2,6 +2,8 @@ package org.dnttr.zephyr.toolset.types;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.dnttr.zephyr.toolset.types.Type.*;
 
@@ -11,39 +13,41 @@ import static org.dnttr.zephyr.toolset.types.Type.*;
 
 public class TypeMatch {
 
-    public static int getModifier(Field field) {
-        final Class<?> parentType = field.getType();
-        final Class<?> componentType = parentType.getComponentType();
+    private static final Map<Class<?>, Integer> TYPE_MODIFIERS = Map.of(
+            byte.class, BYTE.getModifier(),
+            int.class, INT.getModifier(),
+            long.class, LONG.getModifier(),
+            short.class, SHORT.getModifier(),
+            float.class, FLOAT.getModifier(),
+            double.class, DOUBLE.getModifier(),
+            char.class, CHAR.getModifier(),
+            boolean.class, BOOLEAN.getModifier(),
+            String.class, STRING.getModifier()
+    );
 
-        if (componentType == byte.class) {
-            return BYTE.getModifier();
-        } else if (componentType == boolean.class) {
-            return BOOLEAN.getModifier();
-        } else if (componentType == char.class) {
-            return CHAR.getModifier();
-        } else if (componentType == short.class) {
-            return SHORT.getModifier();
-        } else if (componentType == int.class) {
-            return INT.getModifier();
-        } else if (componentType == long.class) {
-            return LONG.getModifier();
-        } else if (componentType == float.class) {
-            return FLOAT.getModifier();
-        } else if (componentType == double.class) {
-            return DOUBLE.getModifier();
-        } else if (componentType == String.class) {
-            return STRING.getModifier();
-        } else {
-            throw new IllegalArgumentException("Unsupported type: " + componentType);
+    public static int getModifier(Field field) {
+        Class<?> parentType = field.getType();
+
+        if (parentType.isArray()) {
+            parentType = parentType.getComponentType();
         }
+
+        Integer modifier = TYPE_MODIFIERS.get(parentType);
+        if (modifier != null) {
+            return modifier;
+        }
+
+        throw new IllegalArgumentException(String.format("Unsupported type: %s", parentType));
     }
 
-    public static Type getType(Field field) {
+    public static Optional<Type> getType(Field field) {
         int modifier = getModifier(field);
         return getType(modifier);
     }
 
-    public static Type getType(int modifier) {
-        return Arrays.stream(Type.values()).filter(type -> type.getModifier() == modifier).findFirst().orElse(null);
+    public static Optional<Type> getType(int modifier) {
+        return Arrays.stream(Type.values())
+                .filter(type -> type.getModifier() == modifier)
+                .findFirst();
     }
 }

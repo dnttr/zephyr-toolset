@@ -10,11 +10,10 @@ import static org.dnttr.zephyr.toolset.types.Type.*;
 
 public class Operations {
 
-    
     static short getValue16(byte[] array) throws InvalidLengthException {
         int size = SHORT.getBytes();
 
-        if (array.length != size) {
+        if (array.length % size != 0) {
             throw new InvalidLengthException(size, array.length, false);
         }
 
@@ -32,7 +31,7 @@ public class Operations {
     static int getValue32(byte[] array) throws InvalidLengthException {
         int size = INT.getBytes();
 
-        if (array.length != size) {
+        if (array.length % size != 0) {
             throw new InvalidLengthException(size, array.length, false);
         }
 
@@ -50,7 +49,7 @@ public class Operations {
     static long getValue64(byte[] array) throws InvalidLengthException {
         int size = LONG.getBytes(); //64 bit
 
-        if (array.length != size) {
+        if (array.length % size != 0) {
             throw new InvalidLengthException(size, array.length, false);
         }
 

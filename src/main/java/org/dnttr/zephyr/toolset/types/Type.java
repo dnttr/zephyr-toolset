@@ -1,6 +1,5 @@
 package org.dnttr.zephyr.toolset.types;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -8,7 +7,6 @@ import lombok.Getter;
  */
 
 @Getter
-@AllArgsConstructor
 public enum Type {
 
     /*
@@ -46,5 +44,10 @@ public enum Type {
     STRING(0x9, 0);
 
     private final int modifier;
-    private int bytes;
+    private final int bytes;
+
+    Type(int modifier, int bytes) {
+        this.modifier = modifier;
+        this.bytes = bytes;
+    }
 }
