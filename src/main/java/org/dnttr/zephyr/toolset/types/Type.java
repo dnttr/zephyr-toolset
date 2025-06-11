@@ -6,7 +6,6 @@ import lombok.Getter;
  * @author dnttr
  */
 
-@Getter
 public enum Type {
 
     /*
@@ -43,7 +42,10 @@ public enum Type {
 
     STRING(0x9, 0);
 
+    @Getter
     private final int modifier;
+
+    @Getter
     private final int bytes;
 
     Type(int modifier, int bytes) {

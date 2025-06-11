@@ -32,12 +32,17 @@ public class TypeMatch {
             parentType = parentType.getComponentType();
         }
 
-        Integer modifier = TYPE_MODIFIERS.get(parentType);
+        return getModifier(parentType);
+    }
+
+    public static int getModifier(Class<?> type) {
+        Integer modifier = TYPE_MODIFIERS.get(type);
+
         if (modifier != null) {
             return modifier;
         }
 
-        throw new IllegalArgumentException(String.format("Unsupported type: %s", parentType));
+        throw new IllegalArgumentException(String.format("Unsupported type: %s", type));
     }
 
     public static Optional<Type> getType(Field field) {
